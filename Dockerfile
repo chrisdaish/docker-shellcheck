@@ -1,4 +1,4 @@
-FROM fedora:20
+FROM fedora:21
 
 MAINTAINER Chris Daish <chrisdaish@gmail.com>
 
@@ -6,7 +6,7 @@ ENV shellcheckVersion 0.3.5
 ENV shellcheckTag v$shellcheckVersion
 
 RUN useradd shellcheck; \
-    yum install --setopt=tsflags=nodocs --nogpgcheck --assumeyes --quiet cabal-install; \
+    yum install --setopt=tsflags=nodocs --nogpgcheck --assumeyes --quiet cabal-install tar; \
     yum clean all; \
     rm -rf /var/cache/yum
 

@@ -1,4 +1,4 @@
-# docker-shellcheck (based on fedora 20)
+# docker-shellcheck
 
 Unofficial shellcheck v0.3.5 docker image. This repository contains the Dockerfile needed to build the docker image. 
 
