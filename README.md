@@ -6,6 +6,9 @@ within a docker container.
 ## Changelog
 
 ```
+v1.i3
+* Version bounced to 0.4.3.
+
 v1.2
 * Version bounced to 0.4.1.
 
@@ -19,7 +22,7 @@ v1.0
 ## Launch Command
 
 ```bash
-$ docker run -v LocalBashScriptLocation:/tmp/FileToBeChecked chrisdaish/shellcheck
+docker run -v LocalBashScriptLocation:/tmp/FileToBeChecked chrisdaish/shellcheck
 ```
 
 ## Sources
