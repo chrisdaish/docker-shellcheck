@@ -2,7 +2,7 @@ FROM fedora:21
 
 MAINTAINER Chris Daish <chrisdaish@gmail.com>
 
-ENV shellcheckVersion 0.4.3
+ENV shellcheckVersion 0.4.4
 ENV shellcheckTag v$shellcheckVersion
 
 RUN useradd shellcheck; \

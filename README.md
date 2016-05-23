@@ -6,7 +6,10 @@ within a docker container.
 ## Changelog
 
 ```
-v1.i3
+v1.4
+* Version bounced to 0.4.4.
+
+v1.3
 * Version bounced to 0.4.3.
 
 v1.2
