@@ -6,6 +6,9 @@ within a docker container.
 ## Changelog
 
 ```
+v1.5
+* Version bounced to 0.4.5.
+
 v1.4
 * Version bounced to 0.4.4.
 
@@ -25,7 +28,9 @@ v1.0
 ## Launch Command
 
 ```bash
-docker run -v LocalBashScriptLocation:/tmp/FileToBeChecked chrisdaish/shellcheck
+docker run -it --rm --name my_check \
+  -v "$PWD":/usr/src -w /usr/src \
+  mangoweb/shellcheck:latest FILE_A.sh FILE_B.sh
 ```
 
 ## Sources

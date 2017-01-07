@@ -1,22 +1,38 @@
 FROM fedora:21
 
-MAINTAINER Chris Daish <chrisdaish@gmail.com>
+MAINTAINER Mikulas Dite <mikulas@mangoweb.cz>
 
-ENV shellcheckVersion 0.4.4
-ENV shellcheckTag v$shellcheckVersion
+ENV cabalVersion 1.24.0.2
+ENV shellcheckVersion 0.4.5
 
-RUN useradd shellcheck; \
-    yum install --setopt=tsflags=nodocs --nogpgcheck --assumeyes --quiet  cabal-install \
-                                                                          tar \
-    && yum clean all \
+# Install dependencies and old Cabal
+RUN yum install --setopt=tsflags=nodocs --nogpgcheck --assumeyes --quiet \
+    	cabal-install \
+		tar \
+		zlib-devel \
+	&& yum clean all \
     && rm -rf /var/cache/yum
 
-USER shellcheck
+# Install Cabal
+RUN curl -Lso /tmp/cabal.tar.gz \
+		https://github.com/haskell/cabal/archive/cabal-install-v$cabalVersion.tar.gz \
+	&& tar zxf /tmp/cabal.tar.gz -C /tmp/ \
+	&& rm /tmp/cabal.tar.gz \
+	&& cd /tmp/cabal-cabal-install-v$cabalVersion \
+	&& cabal update \
+	&& (cd Cabal; cabal install) \
+	&& (cd cabal-install; cabal install)
 
-RUN cabal update \
-    && curl -Lso /tmp/shellcheck-$shellcheckTag.tar.gz https://github.com/koalaman/shellcheck/archive/$shellcheckTag.tar.gz \
-    && tar zxf /tmp/shellcheck-$shellcheckTag.tar.gz -C /tmp/ \
-    && rm /tmp/shellcheck-$shellcheckTag.tar.gz \
-    && cabal install /tmp/shellcheck-$shellcheckVersion
+# Download ShellCheck
+RUN curl -Lso /tmp/shellcheck-$shellcheckVersion.tar.gz \
+		https://github.com/koalaman/shellcheck/archive/v$shellcheckVersion.tar.gz \
+    && tar zxf /tmp/shellcheck-$shellcheckVersion.tar.gz -C /tmp/ \
+    && rm /tmp/shellcheck-$shellcheckVersion.tar.gz
 
-CMD ["/home/shellcheck/.cabal/bin/shellcheck", "-s", "bash", "/tmp/FileToBeChecked"]
+# Install ShellCheck
+RUN export PATH="/root/.cabal/bin:$PATH" \
+     && cabal update \
+     && cabal install /tmp/shellcheck-$shellcheckVersion
+
+ENTRYPOINT ["/root/.cabal/bin/shellcheck"]
+CMD ["-s", "bash", "*.sh"]
