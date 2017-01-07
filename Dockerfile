@@ -3,7 +3,7 @@ FROM fedora:21
 MAINTAINER Mikulas Dite <mikulas@mangoweb.cz>
 
 ENV cabalVersion 1.24.0.2
-ENV shellcheckVersion 0.4.4
+ENV shellcheckVersion 0.4.5
 
 # Install dependencies and old Cabal
 RUN yum install --setopt=tsflags=nodocs --nogpgcheck --assumeyes --quiet \
